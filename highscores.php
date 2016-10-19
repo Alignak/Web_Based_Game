@@ -14,11 +14,12 @@
         <!-- Creating the link to Bootstraps JS -->
         <!-- THE CODE IN THIS STYLESHEET IS NOT MY CODE -->
         <script src="js/bootstrap.js"></script>
+        <script src="js/jquery-3.1.1.js"></script>
         <title>Highscores</title>
     </head>
     
     <body>
-        <?php require('assets/header.php');?>
+        <?php require('add/header.php');?>
 
     </body>
 </html>

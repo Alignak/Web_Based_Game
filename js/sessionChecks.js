@@ -2,6 +2,11 @@ function initialiseSession() {                                              // T
     sessionStorage.loggedIn = false;                                        // It declares all the session storage variables 
     sessionStorage.username = "";                                           // It declares all the session storage variables 
     sessionStorage.sHighscore = 0;                                           // It declares all the session storage variables
+    sessionStorage.currentPage = "logIn";
+sessionStorage.setItem('loggedIn', 'false');
+sessionStorage.setItem('username', "");
+sessionStorage.setItem('sHighscore', 'false');
+sessionStorage.setItem('loggedIn', 'false');
 }
 
 function isLoggedIn() {                 // A function that returns true if the user is logged in
@@ -21,4 +26,8 @@ function returnUsername() {                 // A function that returns the curre
     } else {                                // If no one is logged in:
         return "";                          // Return an empty string
     }
+}
+
+function logOut() {
+    
 }

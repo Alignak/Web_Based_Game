@@ -16,12 +16,15 @@ $username = 'John Doe';
         <script src="js/bootstrap.js"></script>
         <!-- Creating the link to my JS for session based storage ie what user is logged in -->
         <script src="js/sessionCheck.js"></script>
+        <script src="js/jquery-3.1.1.js"></script>
         <!-- Adds a little title to the tab -->
         <title>Home</title>
+        <script>
+        </script>
     </head>
 
     <body>
-        <?php require('assets/header.php');?>
+        <?php require('add/header.php');?>
 
     </body>
 </html>
