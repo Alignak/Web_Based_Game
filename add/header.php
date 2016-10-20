@@ -9,9 +9,10 @@
             <!-- The first link is to the homepage -->
             <!-- JS if statement to declare what will go in the 'header' of the navbar -->
             <script>
-                if (sessionStorage.username == "Admin") {                                                                   // If the user is the admin:
+                var seshInfo = JSON.parse(sessionStorage.getItem("current"));
+                if (seshInfo.seshUsername == "Admin") {                                                                   // If the user is the admin:
                     document.write("<li><a href=\"admin.php\">Admin</a></li>");                                             //  the header links to the admin page and the text says admin
-                } else if (sessionStorage.username != "") {                                                                 // If the user is logged in and not admin:
+                } else if (seshInfo.seshUsername != "") {                                                                 // If the user is logged in and not admin:
                     document.write("<li><a href=\"home.php\"<span class=\"glyphicon glyphicon-home\"></span></a></li>");    //  display a home button
                     document.write("<li><a href=\"game.php\">Play</a></li>");                                               //  a link to the game
                     document.write("<li><a href=\"highscores.php\">Highscores</a></li>");                                   //  and a link to the highscores
@@ -24,16 +25,20 @@
         <ul class="nav navbar-nav navbar-right">
             <!-- If someone who wants to play the game is logged in, display a welcome message -->
             <script>
-                if (sessionStorage.username != "Admin" && sessionStorage.username != "") {
-                    document.write("<li><a href=\"account.php\">Welcome " + sessionStorage.username);
-                }
-                if (sessionStorage.username == "" && sessionStorage.currentPage == "logIn") {
-                    document.write("<li><a href=\"signUp.php\"><span class=\"glyphicon glyphicon-log-in\"></span> Sign Up</a></li>");
-                } else if (sessionStorage.username == "" && sessionStorage.currentPage == "signUp") {
-                    document.write("<li><a href=\"logIn.php\"><span class=\"glyphicon glyphicon-list-alt\"></span> Log In</a></li>");
-                } else {
-                    console.log(window.location.href);
-//                    document.write("<li><a href=\"logIn.php\"><span class=\"glyphicon glyphicon-log-out\"></span> Log Out</a></li>");
+                var seshInfo = JSON.parse(sessionStorage.getItem("current"));
+                if (seshInfo.seshUsername.length == 0) {  // If no user is logged in
+                    if (seshInfo.currentPage == "signUp") {  // If on sign up page
+                    document.write("<li><a href=\"logIn.php\"><span class=\"glyphicon glyphicon-user\"></span> Log In</a></li>");
+                    } else if (seshInfo.currentPage == "logIn") {  // Else on log in page
+                    document.write("<li><a href=\"signUp.php\"><span class=\"glyphicon glyphicon-list-alt\"></span> Sign Up</a></li>");   
+                    } else {
+                    document.write("<li><a href=\"home.php\"> You shouldn't be here...</a></li>");
+                    }
+                } else if (seshInfo.seshUsername == "Admin") {  // Otherwise if the admin is logged in
+                    document.write("<li><a href=\"logIn.php\"><span class=\"glyphicon glyphicon-off\"></span> Log Off</a></li>");
+                } else {  // Else the person is a logged in user
+                    document.write("<li><a href=\"account.php\">Welcome " + seshInfo.seshUsername + "</a></li>");
+                    document.write("<li><a href=\"logIn.php\"><span class=\"glyphicon glyphicon-off\"></span> Log Off</a></li>");
                 }
             </script>
 

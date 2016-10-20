@@ -11,12 +11,12 @@ $username = 'John Doe';
         <!-- Creating the link to the Bootstrap theme -->
         <!-- THE CODE IN THIS STYLESHEET IS NOT MY CODE -->
         <link rel="stylesheet" href="css/bootstrap-theme.css">
+        <script src="js/jquery-3_1_1.js"></script>
         <!-- Creating the link to Bootstraps JS -->
         <!-- THE CODE IN THIS STYLESHEET IS NOT MY CODE -->
         <script src="js/bootstrap.js"></script>
         <!-- Creating the link to my JS for session based storage ie what user is logged in -->
-        <script src="js/sessionCheck.js"></script>
-        <script src="js/jquery-3.1.1.js"></script>
+        <script src="js/sessionChecks.js"></script>
         <!-- Adds a little title to the tab -->
         <title>Home</title>
         <script>

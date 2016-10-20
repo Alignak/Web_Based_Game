@@ -11,18 +11,15 @@
         <link rel="stylesheet" href="css/bootstrap-theme.css">
         <!-- Creating the link to Bootstraps JS -->
         <!-- THE CODE IN THIS STYLESHEET IS NOT MY CODE -->
-        <script src="js/jquery-3.1.1.js"></script>
+        <script src="js/jquery-3_1_1.js"></script>
         <script src="js/bootstrap.js"></script>
-        <script src="js/sessionChecks.js"></script>
+        <script src="js/sessionDb.js"></script>
+        <script src="js/localDb.js"></script>
         <title>Log In</title>
         <script>
-            if (sessionStorage.loggedIn != true) {  // If this is a new session
-                initialiseSession();                // Initialise all the session variables
-            }
-            if (sessionStorage.username != "") {    // If the user is already logged in
-                window.location.assign("home.php"); // Redirect them to the homepage
-            }
-            sessionStorage.setItem("currentPage", "logIn");
+            testLocal();  // Test if the local storage is set up
+            testSession();  // Test if the session storage is set up
+            setPage("logIn");
         </script>
     </head>
 
