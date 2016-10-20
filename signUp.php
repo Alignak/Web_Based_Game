@@ -163,7 +163,9 @@
 
 
             if (verPass && verUser && verEmail) {  // If the inputs have passed all the tests
-                addToUsers(verPass, verUser, verEmail);  // Add the user to the localStorage
+                addToUsers(pass1, usernameText, emailText);  // Add the user to the localStorage
+                alert("You've successfully signed up!");
+                window.location.assign("logIn.php"); // Redirect them to the homepage
             }
         }
 
