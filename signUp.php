@@ -9,13 +9,14 @@
         <!-- Creating the link to the Bootstrap theme -->
         <!-- THE CODE IN THIS STYLESHEET IS NOT MY CODE -->
         <link rel="stylesheet" href="css/bootstrap-theme.css">
+        <!-- This stylesheet refers to the sizes of the buffers used to center the textboxes and is my code -->
+        <link rel="stylesheet" href="css/credentials.css">
+        
         <!-- creating the link to jQuery -->
         <!-- THE CODE IN THIS STYLESHEET IS NOT MY CODE -->
         <script src="js/jquery-3_1_1.js"></script>
         <!-- Creating the link to Bootstraps JS -->
         <!-- THE CODE IN THIS STYLESHEET IS NOT MY CODE -->
-
-
         <script src="js/bootstrap.js"></script>
         <!-- Links to my own JS files -->
         <script src="js/localDb.js"></script>
@@ -30,27 +31,6 @@
             setPage("signUp");
         </script>
 
-        <style>
-            /* Setting the style of the page blocks to center the textboxes */
-            * {
-                box-sizing: border-box;
-            }
-            .leftBorder {
-                width: 25%;
-                float: left;
-                padding: 15px;
-            }
-            .main {
-                width: 50%;
-                float: left;
-                padding: 300px 0px 0px 0px;
-            }
-            .rightBorder {
-                width: 25%;
-                float: left;
-                padding: 15px;
-            }
-        </style>
     </head>
 
 
@@ -163,7 +143,7 @@
 
 
             if (verPass && verUser && verEmail) {  // If the inputs have passed all the tests
-                addToUsers(pass1, usernameText, emailText);  // Add the user to the localStorage
+                addToUsers(emailText, usernameText, pass1);  // Add the user to the localStorage emailIn, userIn, passIn
                 alert("You've successfully signed up!");
                 window.location.assign("logIn.php"); // Redirect them to the homepage
             }

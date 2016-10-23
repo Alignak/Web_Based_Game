@@ -9,10 +9,15 @@
         <!-- Creating the link to the Bootstrap theme -->
         <!-- THE CODE IN THIS STYLESHEET IS NOT MY CODE -->
         <link rel="stylesheet" href="css/bootstrap-theme.css">
+        <!-- This stylesheet refers to the borders on the page which center the textbox -->
+        <link rel="stylesheet" href="css/credentials.css">
+        
+        <!-- Creating the link to jQuery -->
+        <script src="js/jquery-3_1_1.js"></script>
         <!-- Creating the link to Bootstraps JS -->
         <!-- THE CODE IN THIS STYLESHEET IS NOT MY CODE -->
-        <script src="js/jquery-3_1_1.js"></script>
         <script src="js/bootstrap.js"></script>
+        <!-- creating the link to my js files -->
         <script src="js/sessionDb.js"></script>
         <script src="js/localDb.js"></script>
         <title>Log In</title>
@@ -20,6 +25,7 @@
             testLocal();  // Test if the local storage is set up
             testSession();  // Test if the session storage is set up
             setPage("logIn");
+            logOff();
         </script>
     </head>
 
@@ -27,34 +33,42 @@
         <!-- Bring in the header, this is done in all pages -->
         <?php require('add/header.php');?>
 
-        <script>
-            yPadding = window.innerHeight / 2;
-            //            document.write("<div style=\"padding:50px\" align=\"center\">)
-        </script>
+        <!-- Create a left buffer for the sign up credentials -->
+        <div class="leftBorder"></div>
 
-        <!-- Credentials textboxe container -->
-        <div style="padding:300px 600px 0px 600px" align="center">
-            <div class="input-group">
+        <!-- Main is where most of the work for the headers go -->
+        <div class="main" align="center">
+            <div class="input-group"> <!-- An input box for the email address with a glyphicon of an envelope -->
                 <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                <input id="usernameTxtBx" type="text" class="form-control" placeholder="Username / E-Mail" name="usernameTxtBx">
+                <input id="identTxtBx" type="text" class="form-control" placeholder="Username or email address">
             </div>
-            <div class="input-group">
+            <div class="input-group"> <!-- An input box for the username with a glyphicon of a silhouette -->
                 <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
-                <input id ="passwordTxtBx" type="password" class="form-control" placeholder="Password" name="passwordTxtBx">
+                <input id="passwordTxtBx" type="password" class="form-control" placeholder="Password">
             </div>
-
             <br>
-            <div class="btn-group btn-group-lg" role="group">
-                <!--                <button id="signUpBtn" type="button" class="btn btn-danger" onclick="signUp()">Sign Up</button>-->
-                <button id="logInBtn"  type="button" class="btn btn-success" onclick="logIn()">Log In</button>
-            </div>
+            <button type="button" class="btn btn-success" onclick="logInFunc()">Log In</button>  <!-- A button to activate thesign up function -->
         </div>
 
-
-        <script>
-            function signUp() {
-                window.location.assign("signUp.php"); // Redirect them to the homepage
-            }
-        </script>
+        <!-- Create a right buffer for the sign up credentials -->
+        <div class="rightBorder"></div>
     </body>
+    
+    <script>
+        function logInFunc() {
+            var identification = document.getElementById("identTxtBx").value;
+            var password = document.getElementById("passwordTxtBx").value;
+            
+            if (isUsername(identification) || isEmail(identification)) {  // If what the user entered as identification exists
+                if (testPassword(identification, password)) {  // If the users password matches what is in the database
+                    signIn(identification);
+                window.location.assign("home.php"); // Redirect them to the homepage
+                } else {
+                    alert("username/password do not match.");
+                }
+            } else {
+                alert("username/e-mail is not currently in use.");
+            }
+        }
+    </script>
 </html>

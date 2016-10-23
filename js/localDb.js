@@ -1,7 +1,9 @@
 function testLocal() {
     if (localStorage.length == 0) {                                                 // If local storage is empty
+        console.log("Creating new local storage");
         localStorage.setItem("players", "[]");                                      //  Set the local storage item 'players' to an empty string 
         addToUsers("nf287@mdx.ac.uk", "Admin", "admin");                            //  Add the admin account to users
+        localStorage.setItem("highscores", "[]");
     }
 }
 
@@ -36,4 +38,31 @@ function addToUsers(emailIn, userIn, passIn) {                                  
     currentAccounts.push(newUser);                                                  // Push the new user into the array of current users
     var newAccounts = JSON.stringify(currentAccounts);                              // Stringify the array
     localStorage.setItem("players", newAccounts);                                   // Set the array of users to the new array
-} 
+}
+
+function testPassword(idIn, passIn) {
+    var accountsIn = JSON.parse(localStorage.getItem("players"));                   // Retrieve the current JSON array of users
+    var numAcc = accountsIn.length;                                                 // Get the length of the array
+    for (i=0; i<numAcc; i++){                                                       // For each account
+        if (accountsIn[i]["email"].toLowerCase()==idIn.toLowerCase()  ||            //  If the email matches the id in
+            accountsIn[i]["username"].toLowerCase()==idIn.toLowerCase()) {          //  Or the username matches the id in
+            if (accountsIn[i]["password"] == passIn) {                              //   If the passwords match
+                return true;                                                        //    Return true
+            } else {                                                                //   Else break out of the loop
+                i = numAcc;
+            }
+        }
+    }
+    return false;                                                                   // The id was not found or the password was wrong, return false
+}
+
+function getUsername(idIn) {
+    var accountsIn = JSON.parse(localStorage.getItem("players"));                   // Retrieve the current JSON array of users
+    var numAcc = accountsIn.length;                                                 // Get the length of the array
+    for (i=0; i<numAcc; i++){                                                       // For each account
+        if (accountsIn[i]["email"].toLowerCase()==idIn.toLowerCase()  ||            //  If the email matches the id in
+            accountsIn[i]["username"].toLowerCase()==idIn.toLowerCase()) {          //  Or the username matches the id in
+            return accountsIn[i]["username"];
+        }
+    }
+}

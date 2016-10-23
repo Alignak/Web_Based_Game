@@ -37,7 +37,10 @@
                 } else if (seshInfo.seshUsername == "Admin") {  // Otherwise if the admin is logged in
                     document.write("<li><a href=\"logIn.php\"><span class=\"glyphicon glyphicon-off\"></span> Log Off</a></li>");
                 } else {  // Else the person is a logged in user
-                    document.write("<li><a href=\"account.php\">Welcome " + seshInfo.seshUsername + "</a></li>");
+                    document.write("<li><a>Welcome " + seshInfo.seshUsername + "</a></li>");
+                    document.write("<li><a>|</a></li>");
+                    document.write("<li><a href=\"account.php\">My Account</a></li>");
+                    document.write("<li><a>|</a></li>");
                     document.write("<li><a href=\"logIn.php\"><span class=\"glyphicon glyphicon-off\"></span> Log Off</a></li>");
                 }
             </script>
@@ -45,4 +48,3 @@
         </ul>
     </div>
 </nav>
-<!--            document.write("<h1>Hello World!</h1>");-->
