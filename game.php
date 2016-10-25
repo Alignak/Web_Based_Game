@@ -1,7 +1,4 @@
 <!DOCTYPE html>
-<?php
-$username = 'Jogn Doe';
-?>
 
 <html lang="en">
     <head>
@@ -25,6 +22,8 @@ $username = 'Jogn Doe';
         <script src="js/game.js"></script>
         <title>Playing</title>
         <script>
+            testLocal();  // Test if the local storage is set up
+            testSession();  // Test if the session storage is set up
             setPage("game");
         </script>
     </head>
@@ -36,10 +35,12 @@ $username = 'Jogn Doe';
 
 
 
-            <canvas class="game-canvas" id="gameCanvas" width="1440" height="720"></canvas>
+            <canvas class="game-canvas" id="game-canvas" width="1440" height="720"></canvas>
             
+            <script> generateMap(); </script>
             
-            
+            <script> initialiseGame(); </script>
+
         </div>
         <div class="rightBorder">
             <div class="page-header"><h1>Highscores</h1>
