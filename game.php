@@ -36,10 +36,27 @@
 
 
             <canvas class="game-canvas" id="game-canvas" width="1440" height="720"></canvas>
-            
-            <script> generateMap(); </script>
-            
-            <script> initialiseGame(); </script>
+
+            <script>
+                var canvas = document.getElementById("game-canvas");
+                var ctx = canvas.getContext("2d");
+                var xPos = 20;
+                var yPos = 20;
+                var xVel = 0;
+                var yVel = 0;
+                setInterval(function() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);  // Clear the canvas
+//                    movePlayer();
+//                    moveObjects();
+//                    testCollisions();
+//                    drawBackground();
+//                    drawObjects();
+//                    drawPlayer();
+//                    drawObectsForeground();
+//                    drawStats();
+                    printBuilding(canvas.width/2, canvas.height/3, canvas.width/3, 1);//xPosIn, yPosIn, width, type
+                }, 10);
+            </script>
 
         </div>
         <div class="rightBorder">
