@@ -10,176 +10,111 @@
 
 
 
-var up, down, left, right = false;
+var up, down, left, right, jump = false;
 var rectMode = "CENTER";
 
+function stepMotion() {                                                                                                 // Step motion for every being in the system
+    user.movePlayer();                                                                                                  // Step the movements of the user
+    user.collideCanvas();
+    for (i=0; i<16; i++) {                                                                                              // For each hill in the background
+        hills[i].moveHill();                                                                                            // Move the hill
+    }
+    for (c=0; c<16; c++) {
+        clouds[c].moveCloud();
+    }
+    for (b=0; b<buildings.length; b++) {
+        buildings[b].moveBuilding();
+        buildings[b].collidePlayer();
+    }
 
-
-//movePlayer();
-//moveObjects();
-//testCollisions();
-//drawBackground();
-//drawObjects();
-//drawPlayer();
-//drawObectsForeground();
-
-
-function movePlayer() {
-    var xVelKeys = getXKeyPress();  // Returns the velocity in xDirection depending on keys down
-    var yVelKeys = getYKeyPress();
-    xVel = xVel + xVelKeys;
-    yVel = yVel + yVelKeys;
-    xPos+=xVel;
-    yPos+=yVel;
-    xVel = xVel * 0.95;
-    yVel = yVel * 0.95;
 }
 
-function moveObjects() {
-    
+function drawPlayer() {                                                                                                 // Function that draws the player
+    user.drawPlayer();
 }
 
-function testCollisions() {
-    if (player)
+function drawBackground() {                                                                                             // Function that draws the sky
+    ctx.beginPath();
+    ctx.rect(0, 0, canvas.width, canvas.height);                                                                        // Uses the rect to draw a square across the entire canvas
+    ctx.fillStyle = "#87AFC7";                                                                                          // Sets the fill color to a sky blue                                                
+    ctx.fill();                                                                                                         // Fills the rectangle
+    ctx.closePath();                                                                                                    // Closes the path which finally draws the rectangle
 }
 
-function drawBackground() {
-    
+function drawHillside() {                                                                                               // Function that draws all the hills on the screen
+    for (c=0; c<9; c++) {
+        clouds[c].drawCloud();
+    }
+    for (h=0; h<8; h++) {                                                                                              //  For each hill
+        hills[h].drawHill();                                                                                            //   Run the class function that draws the hill
+    }
+    for (c=9; c<16; c++) {
+        clouds[c].drawCloud();
+    }
+    for (h=8; h<16; h++) {
+        hills[h].drawHill();
+    }
+    ctx.globalAlpha = 1;
+    rect(0, canvas.height/2+100, canvas.width, canvas.height/2, "#348017");                                             //  Draw a green rectangle under the hills
 }
 
 function drawObjects() {
-    
+    for (i=0; i<buildings.length; i++){
+        buildings[i].printBackground();
+    }
 }
 
-function drawPlayer() {
-    
-}
-
-function drawObjectsForeground() {
-    
-}
-
-function rect(xIn, yIn, width, height, fillColor) {
-    var canvas = document.getElementById("game-canvas");
+function rect(xIn, yIn, width, height, fillColor) {                                                                     // Function that tries tho replicate the already existant ctx.rect function
+    var canvas = document.getElementById("game-canvas");                                                                //  Gets the canvas and the context
     var ctx = canvas.getContext("2d");
-    ctx.beginPath();
-    if (rectMode=="CORNER") {
-        ctx.rect(xIn, yIn, width, height);
-    } else if (rectMode=="CENTER") {
-        ctx.rect(xIn - width/2, yIn - height/2, width, height);
+    ctx.beginPath();                                                                                                    //  Begin the drawing
+    if (rectMode=="CORNER") {                                                                                           //  If I was to draw from the top righ corner of the rectangle
+        ctx.rect(xIn, yIn, width, height);                                                                              //   Do an normal rect
+    } else if (rectMode=="CENTER") {                                                                                    //  Else if I want it centered
+        ctx.rect(xIn - width/2, yIn - height/2, width, height);                                                         //   Print position depending on size
     }
-    ctx.fillStyle = fillColor;
-    ctx.fill();
-    ctx.closePath();
-}
-
-function printBuilding(xPosIn, yPosIn, bWidth, type) {                                                                   // Function that prints buildings based on its position from the bottom of the canvas
-    switch (type) {                                                                                                     // Each building has a different type of print
-        case 1:                                                                                                         // Case 1 is the first building, very simple with no transparency
-            rectMode = "CORNER";
-            rect(xPosIn, yPosIn, bWidth, 20, "#BDB6B4"); // Grey top of the building
-            rect(xPosIn+5, yPosIn+20, bWidth-10, canvas.height-yPosIn, "#a7331b");  // Main foundation of the building
-            for (j=0; j< canvas.height-yPosIn; j+=95){
-                for (i=0; i<bWidth; i+=75) {  // Iterative windows
-                    if ((100+i)< bWidth) {  // If the window would fit on the buildings
-                        rect(xPosIn+20+i, yPosIn+j+40, 60, 80, "#DDDDDD");  // Frame of the window (light)
-                        rect(xPosIn+20+i, yPosIn+j+40, 58, 78, "#BDBDBD");  // Frame of the window (dark)
-
-                        for(x=0; x<2; x++){  // Dark rim of the windows, for loops are for iteration
-                            for(y=0; y<2; y++){  // Loops also set the position
-                                rect(xPosIn+25+i+(x*30), yPosIn+j+45+(y*40), 20, 30, "#0095DD");
-                            }
-                        }
-
-                        for (x=0; x<2; x++) {  // Light blue inner of the windows
-                            for (y=0; y<2; y++) {  // Iteration same as above
-                                rect(xPosIn+i+(x*30)+26, yPosIn+j+(y*40)+46, 19, 29, "#87CEFA");
-                            }
-                        }
-                    }
-                    console.log(i);
-                    console.log(bWidth);
-                }
-            }
-            break;
-    }
+    ctx.fillStyle = fillColor;                                                                                          //  Set the fill color
+    ctx.fill();                                                                                                         //  Apply the fill color
+    ctx.closePath();                                                                                                    //  Generate the rectangle
 }
 
 
-
-function checkCollisions() {
-    if (yPos <= 25) {
-        yVel = yVel * -0.8;
-        yPos = 26;
-    } else if ((yPos+25)>=canvas.height) {
-        yVel = yVel * -0.8;
-        yPos = canvas.height-26;
-    }
-    if (xPos <=25) {
-        xVel = xVel * -0.8;
-        xPos = 26;
-    } else if ((xPos+25) >= canvas.width) {
-        xVel = xVel * -0.8;
-        xPos = canvas.width-26;
-
-    }
-    //    if (yPos >= 0) {
-    //        yVel = -yVel;
-    //        yPos = 1;
-    //    }
+function getXKeyPress() {                                                                                               // Function to get the the keys that manipulate the players x-axis
+    var x = 0;                                                                                                          //  Set default
+    if (left) x--;                                                                                                      //  If "A" OR left key are pressed, step down x
+    if (right) x++;                                                                                                     //  ALSO If "D" or right key are pressed, step up x
+    return x;                                                                                                           //  Return X
 }
-
-function drawPlayer() {
-    rectMode= "CORNER";
-    rect(xPos, yPos+Math.abs(xVel), 50-Math.abs(yVel), 50-Math.abs(xVel), "#0095DD");
-}
-
-function getXKeyPress() {
-    var x = 0;
-    if (left) x--;
-    if (right) x++;
-    return x;
-}
-function getYKeyPress() {
+function getYKeyPress() {                                                                                               // Function that does the same as getXKeyPress for the y-axis
     var y=0;
     if (up) {y--;}
     if (down) {y++;}
     return y;
 }
 
-document.addEventListener('keydown', function(event){
-    switch(event.keyCode){
-        case 87:
-        case 38:
-            up = true;
-            break;
-        case 65:
+document.addEventListener('keydown', function(event){                                                                   // JS event listener for when a key is pressed down
+    switch(event.keyCode){                
+        case 65:                                                                                                        //  For "A" and LEFT key, go left
         case 37:
             left = true;
             break;
-        case 83:
-        case 40:
-            down = true;
-            break;
-        case 68:
+        case 68:                                                                                                        //  D, Right key, go right
         case 39:
             right = true;
             break;
+        case 32:
+            if (jump == false) {
+                user.jump();
+                jump = true;
+            }
+
     }
 })
-document.addEventListener('keyup', function(event){
+document.addEventListener('keyup', function(event){                                                                     // Function same as keydown event listener but for when the key is released 
     switch(event.keyCode){
-        case 87:
-        case 38:
-            up = false;
-            break;
         case 65:
         case 37:
             left = false;
-            break;
-        case 83:
-        case 40:
-            down = false;
             break;
         case 68:
         case 39:
