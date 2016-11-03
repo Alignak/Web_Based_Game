@@ -29,3 +29,8 @@ function logOff() {
     var newSesh = JSON.stringify(curSesh);
     sessionStorage.setItem("current", newSesh);
 }
+
+function getSHighscore() {
+    var curSesh = JSON.parse(sessionStorage.getItem("current"));
+    return curSesh.seshHighscore;
+}

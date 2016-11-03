@@ -94,7 +94,7 @@ Player.prototype.movePlayer = function() {                                      
     this.xPos = this.xPos + this.xVel;
     this.yPos = this.yPos + this.yVel;
     this.xVel = this.xVel * 0.9;
-    this.yVel = (this.yVel * 0.95)+0.3;
+    this.yVel = (this.yVel * 0.95)+0.5;
     this.xPos = this.xPos - scrollSpeed;
 // TODO: All the commenting
 }
@@ -181,13 +181,14 @@ Building.prototype.printBackground = function() {  // furthestX + bStatBWidth, b
     }
 }
 Building.prototype.moveBuilding = function() {
-    this.xPos = this.xPos - scrollSpeed;
-    if (this.xPos+this.width < 0) {// If needs restarting
-        var bStatBWidth = Math.floor(Math.random()* currentMillis/100)-10;
-        var bStatHeight = pHeight + Math.floor(Math.random()* 100)-25;
+    this.xPos = this.xPos - scrollSpeed;                                                                                // Moves the building
+    if (this.xPos+this.width < 0) {                                                                                     // If the building passed the user
+        var bStatBWidth = Math.floor(Math.random()* currentMillis/100)-10;                                              // Reset the building width
+        var bStatHeight = pHeight - Math.floor(Math.random()* 50)+25;                                                   // Reset the building height using pHeight
+//        var bStatHeight = pHeight + 50;                                                   // Reset the building height using pHeight
         var bStatWidth = Math.floor(Math.random() * 500) + 200;
         this.xPos = furthestX + bStatBWidth;
-        this.height = bStatHeight;
+        this.yPos = bStatHeight;
         this.width = bStatWidth;
         furthestX=this.xPos+this.width;
         pHeight = bStatHeight;
@@ -204,12 +205,6 @@ Building.prototype.collidePlayer = function() {
         jump = false;
     }
 }
-
-/*                                                                           // For each initial building
-var bStatHeight = pHeight + Math.floor(Math.random()*100)-25;                                       // It needs a height relevant to the previous buildings height, default is half up the screen
-var bStatBWidth = Math.floor(Math.random()*50)*-1;                                                  // This is the width between the previous building and this one
-var bStatWidth = Math.floor(Math.random() * 500) + 200;                                            // This is the width of the new building
-var bStatType = Math.floor(Math.random() * 5);                                                      // This is the type of building there is, currently I'm hardcoding it to 0
-buildings[i] = new Building(furthestX+bStatBWidth, bStatHeight, bStatWidth, bStatType);           // Now we actually create the new object
-pHeight = bStatHeight;                                                                              // Now we have a new height, set the pHeight for the next building
-furthestX = furthestX + bStatWidth + bStatBWidth;                                                   // Need to set a new furthestX for the next building*/
+Building.prototype.getHeight = function() {
+    return this.height;
+}

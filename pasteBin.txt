@@ -1,0 +1,135 @@
+
+                /*    // create a link between the canvas and the javascript
+                var user = new Player("#0095DD");                                                                       // Create the users character
+                var initMillis = (new Date).getTime();                                                                  // initMillis is the EPOCH time when the game first loaded, will be used for scroll speed
+                var currentMillis;                                                                                      // Current millis is the current time as epoch
+                var scrollSpeed;                                                                                        // Scroll speed is how past the screen should scroll
+
+                var buildings = [];                                                                                     // The buildings array will store the building objects
+                var furthestX = -5;                                                                                     // furthestX will store the furthest right point on any building
+                var pHeight = canvas.height/2;                                                                          // pheight is the hight of the last building
+                buildings.length = 7;                                                                                   // 7 buildings will scroll across
+                for (i=0; i<buildings.length; i++) {                                                                    // For each initial building
+                    var bStatHeight = pHeight - Math.floor(Math.random()*50)+25;                                       // It needs a height relevant to the previous buildings height, default is half up the screen
+                    var bStatBWidth = Math.floor(Math.random()*50)*-1;                                                  // This is the width between the previous building and this one
+                    var bStatWidth = Math.floor(Math.random() * 500) + 200;                                             // This is the width of the new building
+                    var bStatType = Math.floor(Math.random() * 5);                                                      // This is the type of building there is, currently I'm hardcoding it to 0
+
+                    buildings[i] = new Building(furthestX+bStatBWidth, bStatHeight, bStatWidth, bStatType);             // Now we actually create the new object
+
+                    pHeight = bStatHeight;                                                                              // Now we have a new height, set the pHeight for the next building
+                    furthestX = furthestX + bStatWidth + bStatBWidth;                                                   // Need to set a new furthestX for the next building
+                }
+
+
+                var hills = [];                                                                                         // hills array will hold the hill objects for the background
+                hills.length = 16;                                                                                      // There will be 16 hills, 8 in the back & 8 further back
+                for (i=0; i<8; i++) {                                                                                   // Construct the hills, each set of 8 having different settings
+                    hills[i]   = new HillsideBeings(canvas.width/5*i, Math.floor(Math.random()*100)+200, 0);
+                    hills[i+8] = new HillsideBeings(canvas.width/5*i+100, Math.floor(Math.random()*100)+200, 1);
+                }
+
+                var clouds = [];                                                                                        // Clouds array will hold the cloud objects for the background
+                clouds.length = 16;                                                                                     // There will be 16 clouds created
+                for (a=0; a<9; a++) {
+                    clouds[a] = new Cloud(Math.floor(Math.random()*canvas.width), canvas.height/4-50, Math.floor(Math.random()*5)+4, 0);  // First 9 clouds are in the background
+                }
+                for (a=9; a<16; a++) {
+                    clouds[a] = new Cloud(Math.floor(Math.random()*canvas.width), canvas.height*2/4-150, Math.floor(Math.random()*5)+4, 1);  // The other clouds are further ahead
+                }
+
+                var currentScore = 0;
+                var sessionHighscore = getSHighscore();   
+
+                /////////////////////
+                //                 //
+                //  MAIN GAME LOOP //
+                //                 //
+                /////////////////////
+                console.log(pHeight);
+                for (i=0; i<buildings.length; i++) {
+                    var tempHeight = buildings[i].getHeight;
+                    console.log(tempHeight);
+                }
+                */
+                /*   setInterval(function() {
+                    // TODO: Start page!
+                    // TODO: Switchcase for states: PrePlay, playing, dead
+                    document.getElementById("pHeightPara").innerHTML = pHeight;
+                    document.getElementById("buildingHeight").innerHTML = buildings[6].getHeight();
+                    currentMillis =(new Date).getTime()- initMillis;                                                    // currentMillis becomes the amount of milliseconds since game started
+                    scrollSpeed = currentMillis/10000;                                                                  // The scroll speed is set to 10'000th of time so far
+                    if (scrollSpeed>6) scrollSpeed = 6;                                                                 // Limits the scrollSpeed to 6
+                    furthestX = furthestX- scrollSpeed;                           
+                    stepMotion();
+                    drawBackground();
+                    drawHillside();
+                    drawObjects();
+                    drawPlayer();
+                    printData();
+                    //                    testCollisions();
+                    //                    drawObectsForeground();
+                    //                    drawStats();
+                }, 10);
+                */
+
+
+
+/*
+//
+//function stepMotion() {                                                                                                 // Step motion for every being in the system
+//    user.movePlayer();                                                                                                  // Step the movements of the user
+//    user.collideCanvas();
+//    for (i=0; i<16; i++) {                                                                                              // For each hill in the background
+//        hills[i].moveHill();                                                                                            // Move the hill
+//    }
+//    for (c=0; c<16; c++) {
+//        clouds[c].moveCloud();
+//    }
+//    for (b=0; b<buildings.length; b++) {
+//        buildings[b].moveBuilding();
+//        buildings[b].collidePlayer();
+//    }
+//
+//}
+//
+//function drawPlayer() {                                                                                                 // Function that draws the player
+//    user.drawPlayer();
+//}
+//
+//function drawBackground() {                                                                                             // Function that draws the sky
+//    ctx.beginPath();
+//    ctx.rect(0, 0, canvas.width, canvas.height);                                                                        // Uses the rect to draw a square across the entire canvas
+//    ctx.fillStyle = "#87AFC7";                                                                                          // Sets the fill color to a sky blue                                                
+//    ctx.fill();                                                                                                         // Fills the rectangle
+//    ctx.closePath();                                                                                                    // Closes the path which finally draws the rectangle
+//}
+//
+//function drawHillside() {                                                                                               // Function that draws all the hills on the screen
+//    for (c=0; c<9; c++) {
+//        clouds[c].drawCloud();
+//    }
+//    for (h=0; h<8; h++) {                                                                                              //  For each hill
+//        hills[h].drawHill();                                                                                            //   Run the class function that draws the hill
+//    }
+//    for (c=9; c<16; c++) {
+//        clouds[c].drawCloud();
+//    }
+//    for (h=8; h<16; h++) {
+//        hills[h].drawHill();
+//    }
+//    ctx.globalAlpha = 1;
+//    rect(0, canvas.height/2+100, canvas.width, canvas.height/2, "#348017");                                             //  Draw a green rectangle under the hills
+//}
+//
+//function drawObjects() {
+//    for (i=0; i<buildings.length; i++){
+//        buildings[i].printBackground();
+//    }
+//}
+//
+//function printData() {
+//    text("Score: " + currentScore, 10, 60, 25, "#FFFFFF");
+//    text("POTD: " + sessionHighscore, 10, 110, 25, "#FFFFFF");
+//}
+*/

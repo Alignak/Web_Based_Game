@@ -9,59 +9,77 @@
 
 
 
-
-var up, down, left, right, jump = false;
-var rectMode = "CENTER";
-
-function stepMotion() {                                                                                                 // Step motion for every being in the system
-    user.movePlayer();                                                                                                  // Step the movements of the user
-    user.collideCanvas();
-    for (i=0; i<16; i++) {                                                                                              // For each hill in the background
-        hills[i].moveHill();                                                                                            // Move the hill
-    }
-    for (c=0; c<16; c++) {
-        clouds[c].moveCloud();
-    }
-    for (b=0; b<buildings.length; b++) {
-        buildings[b].moveBuilding();
-        buildings[b].collidePlayer();
-    }
+function initialiseObjects() {
 
 }
 
-function drawPlayer() {                                                                                                 // Function that draws the player
-    user.drawPlayer();
+function drawMainMenu() {
+    // Draw background objects
+    drawBackground();
+    // Draw menu
+    drawMenu();
+    rectMode="CENTER";
+    //    rect(mousePos[0], mousePos[1], 100, 100, "#000000")
+    // TODO: Use clicks for menu stuff
+}
+function stepMainMenu() {
+    for (c=0; c<clouds.length; c++) clouds[c].moveCloud();
 }
 
-function drawBackground() {                                                                                             // Function that draws the sky
-    ctx.beginPath();
-    ctx.rect(0, 0, canvas.width, canvas.height);                                                                        // Uses the rect to draw a square across the entire canvas
-    ctx.fillStyle = "#87AFC7";                                                                                          // Sets the fill color to a sky blue                                                
-    ctx.fill();                                                                                                         // Fills the rectangle
-    ctx.closePath();                                                                                                    // Closes the path which finally draws the rectangle
+function drawPlaying() {
+    // TODO: Set time info
+    // TODO: Step all motion
+    // Draw background objects
+    drawBackground();
+    // TODO: draw building backgrounds
+    // TODO: draw player
+    // TODO: draw building foreground
+    // TODO: draw stats
+}
+function drawGameOver() {
+    // TODO: Draw background
+    // TODO: Draw stats
+    // TODO: Use clicks for menu stuff
 }
 
-function drawHillside() {                                                                                               // Function that draws all the hills on the screen
-    for (c=0; c<9; c++) {
-        clouds[c].drawCloud();
+function drawBackground() {
+    rectMode = "CORNER";
+    rect(0,0,canvas.width, canvas.height, "#87AFC7");
+    for (c=0; c<9; c++) clouds[c].drawCloud();
+    for (h=0; h<8; h++) hills[h].drawHill();
+    for (c=9; c<clouds.length; c++) clouds[c].drawCloud();
+    for (h=8; h<hills.length; h++) hills[h].drawHill();
+    rect(0,canvas.height/2+100, canvas.width, canvas.height/2-100, "#348017");
+}
+function drawMenu() {
+    if (mouseIn((canvas.width/2)-(canvas.width/10*3), (canvas.height/2)- (canvas.height/10), canvas.width/5*3, canvas.height/5)) {
+        ctx.globalAlpha = 1;
+    } else {
+        ctx.globalAlpha = 0.5;
     }
-    for (h=0; h<8; h++) {                                                                                              //  For each hill
-        hills[h].drawHill();                                                                                            //   Run the class function that draws the hill
-    }
-    for (c=9; c<16; c++) {
-        clouds[c].drawCloud();
-    }
-    for (h=8; h<16; h++) {
-        hills[h].drawHill();
-    }
+    rectMode = "CENTER";
+    rect(canvas.width/2, canvas.height/2, canvas.width/5*3, canvas.height/5, "#0095DD");
     ctx.globalAlpha = 1;
-    rect(0, canvas.height/2+100, canvas.width, canvas.height/2, "#348017");                                             //  Draw a green rectangle under the hills
+    text("Play", canvas.width/2-68, canvas.height/2+20, 76, "#FFFFFF");
 }
 
-function drawObjects() {
-    for (i=0; i<buildings.length; i++){
-        buildings[i].printBackground();
+function clicked() {
+    switch(state) {
+        case 0:
+        case 2:
+            if (mouseIn((canvas.width/2)-(canvas.width/10*3), (canvas.height/2)- (canvas.height/10), canvas.width/5*3, canvas.height/5)) {
+                state = 1;
+            }
+            break;
+
     }
+}
+
+function text(textIn, xPos, yPos, sizeIn, colorIn) {
+    ctx.fillStyle=colorIn;
+    var sizeStr = sizeIn + "px Arial";
+    ctx.font=sizeStr;
+    ctx.fillText(textIn, xPos, yPos);
 }
 
 function rect(xIn, yIn, width, height, fillColor) {                                                                     // Function that tries tho replicate the already existant ctx.rect function
@@ -78,7 +96,6 @@ function rect(xIn, yIn, width, height, fillColor) {                             
     ctx.closePath();                                                                                                    //  Generate the rectangle
 }
 
-
 function getXKeyPress() {                                                                                               // Function to get the the keys that manipulate the players x-axis
     var x = 0;                                                                                                          //  Set default
     if (left) x--;                                                                                                      //  If "A" OR left key are pressed, step down x
@@ -92,7 +109,19 @@ function getYKeyPress() {                                                       
     return y;
 }
 
+function mouseIn(xIn, yIn, widthIn, heightIn) {
+    if (mousePos[0] >xIn && mousePos[0]<xIn+widthIn) {
+        if (mousePos[1]>yIn && mousePos[1]<yIn+heightIn){
+            return true;
+        }
+    }
+    return false;
+}
+
+
+
 document.addEventListener('keydown', function(event){                                                                   // JS event listener for when a key is pressed down
+    console.log(event.keyCode);
     switch(event.keyCode){                
         case 65:                                                                                                        //  For "A" and LEFT key, go left
         case 37:
@@ -107,6 +136,12 @@ document.addEventListener('keydown', function(event){                           
                 user.jump();
                 jump = true;
             }
+            break;
+        case 13:
+            if (state!=1){
+                state=1;
+            }
+            break;  
 
     }
 })
